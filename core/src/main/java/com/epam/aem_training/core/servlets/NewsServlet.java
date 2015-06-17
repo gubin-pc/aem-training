@@ -15,6 +15,7 @@
  */
 package com.epam.aem_training.core.servlets;
 
+import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -28,6 +29,7 @@ import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
 
 import com.epam.aem_training.core.NewsCrawlerService;
+import com.epam.aem_training.core.TwitterStreamService;
 import com.epam.aem_training.core.models.NewsCrawler;
 import com.epam.aem_training.core.models.NewsCrawler.News;
 
@@ -45,18 +47,22 @@ import java.io.IOException;
         label = "Samples - Sling All Methods Servlet",
         description = "Sample implementation of a Sling All Methods Servlet.",
         methods = { "GET" }, // Ignored if paths is set - Defaults to GET if not specified
-        resourceTypes = {"aemnews/components/structure/news-page"}, // Ignored if paths is set
+        resourceTypes = {"aemtraining/components/structure/news-page"}, // Ignored if paths is set
         selectors = {"JSON"},
         extensions = { "html", "htm" }  // Ignored if paths is set
 )
 public class NewsServlet extends SlingSafeMethodsServlet {
 
+	@Reference
+	private NewsCrawlerService crawlerService;
+	
     @Override
     protected void doGet(final SlingHttpServletRequest req,
             final SlingHttpServletResponse resp) throws ServletException, IOException {
-    	SlingBindings bindings = (SlingBindings) req.getAttribute(SlingBindings.class.getName());
-    	SlingScriptHelper scriptHelper = bindings.getSling();
-    	NewsCrawler crawler = new NewsCrawler(req, scriptHelper.getService(NewsCrawlerService.class));
+    	//SlingBindings bindings = (SlingBindings) req.getAttribute(SlingBindings.class.getName());
+    	//SlingScriptHelper scriptHelper = bindings.getSling();
+    	resp.getWriter().print(crawlerService.getPath());
+    	NewsCrawler crawler = new NewsCrawler(req, crawlerService);
     	JSONArray json = new JSONArray();
     	for (News item : crawler.getNews()) {
     		JSONObject obj = new JSONObject();
@@ -77,7 +83,7 @@ public class NewsServlet extends SlingSafeMethodsServlet {
 			e.printStackTrace();
 		}
     	resp.setContentType("application/json");
-        resp.getWriter().print(obj);
+        resp.getWriter().print("hsjdfkghfghwe");
 //        resp.flushBuffer();
     }
 }

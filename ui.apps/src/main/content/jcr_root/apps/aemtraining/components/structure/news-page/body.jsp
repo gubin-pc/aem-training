@@ -10,7 +10,7 @@
 </head>
 <body>
 	<cq:include path="title"
-		resourceType="aemnews/components/content/title" />
+		resourceType="aemtraining/components/content/title" />
 	<cq:include path="par" resourceType="foundation/components/parsys" />
 </body>
 </html>
