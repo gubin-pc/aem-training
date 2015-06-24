@@ -7,10 +7,9 @@
 <div class="news">
 	<a href="/content/aemnews/en/news/${fn:toLowerCase(fn:replace(item.title,' ', '_'))}.html">${item.title}</a>
  	<div class="news-content">
-	 		<div class="img"><img src="${item.imgSrc}"/></div>
- 			<div class="text">${item.text}</div>
- 			<div class="text">${item.text}</div>
- 			egf
+ 		<div class="img"><img src="${item.imgSrc}"/></div>
+		<div class="text">${item.text}</div>
+		<div class="text">${item.text}</div>
 	</div>
 	<div style="clear: both;"></div>
 </div>
